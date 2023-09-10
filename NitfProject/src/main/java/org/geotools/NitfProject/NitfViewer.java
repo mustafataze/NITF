@@ -16,7 +16,6 @@ import org.geotools.swing.JMapPane;
 //Define a class that extends JPanel and implements Runnable
 public class NitfViewer extends JPanel implements Runnable {
 
-// Declare some fields
 private File nitfFile; // The nitf file to display
 private JMapPane mapPane; // The map pane to show the image
 private MapContent mapContent; // The map content to hold the grid coverage
@@ -35,12 +34,12 @@ public GridCoverage2D readGridCoverage() throws IOException {
  // Find the format of the nitf file
  AbstractGridFormat format = GridFormatFinder.findFormat(nitfFile);
  // Create a reader for the nitf file
- GeoTiffReader reader = new GeoTiffReader(nitfFile, format.getReadHints());
+ GeoTiffReader reader = new GeoTiffReader(nitfFile, format.getReadHints());  //!!!!(error?)
  // Read the grid coverage from the reader
  GridCoverage2D coverage = reader.read(null);
- // Close the reader
+ 
  reader.dispose();
- // Return the grid coverage
+ 
  return coverage;
 }
 
@@ -72,7 +71,7 @@ public void run() {
    addGridCoverageToMap(coverage);
    // Set up the renderer for the map pane
    setupRenderer();
-   // Repaint the map pane
+
    mapPane.repaint();
  } catch (IOException e) {
    e.printStackTrace();
@@ -80,12 +79,11 @@ public void run() {
 }
 }
 
-//Define a main class to test the application
 class Main {
 
 public static void main(String[] args) {
  // Create a nitf file object
- File nitfFile = new File("path/to/your/nitf/file");
+ File nitfFile = new File("example.nitf"); //address path
  // Create a nitf viewer object with the nitf file
  NitfViewer viewer = new NitfViewer(nitfFile);
  // Create a frame to hold the viewer panel
@@ -97,6 +95,6 @@ public static void main(String[] args) {
 
  // Create a thread to run the viewer object
  Thread thread = new Thread(viewer);
- thread.start(); // Start the thread
-}
+ thread.start(); // 
+	}
 }
